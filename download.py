@@ -1,11 +1,8 @@
 import praw
-import urllib.request
+import os
 
 r = praw.Reddit(user_agent="clarus_tester")
-submissions = r.get_subreddit("aww").get_hot(limit=5)
+submissions = r.get_subreddit("aww").get_hot(limit=20)
 for submission in submissions:
-    print("Downloading", submission.title)
-    picture = urllib.request.urlopen(submission.url).read()
-    output = open("pictures/" + str(submission.score) + ".jpg", "wb")
-    output.write(picture)
-    output.close()
+    _, extension = os.path.splitext(submission.url)
+    print(submission.score, extension)
